@@ -1,4 +1,4 @@
-package com.example.application.views.main;
+package com.example.application.views;
 
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
@@ -9,7 +9,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 @PageTitle("Main")
-@Route(value = "")
+@Route(value = "main")
 public class MainView extends HorizontalLayout {
 
     private TextField name;

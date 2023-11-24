@@ -63,28 +63,4 @@ public class Author {
         this.books = books;
     }
 
-
-    @Override
-    public String toString() {
-        return "Autor{" +
-                "idAuthor=" + idAuthor +
-                ", nombre='" + name + '\'' +
-                ", apellidos='" + surnames + '\'' +
-                ", nacionalidad='" + nationality + '\'' +
-                ", books=" + books +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Author author = (Author) o;
-        return idAuthor == author.idAuthor && Objects.equals(name, author.name) && Objects.equals(surnames, author.surnames) && Objects.equals(nationality, author.nationality) && Objects.equals(books, author.books);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(idAuthor, name, surnames, nationality, books);
-    }
 }

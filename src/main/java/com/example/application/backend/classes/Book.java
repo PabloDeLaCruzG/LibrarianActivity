@@ -1,7 +1,5 @@
 package com.example.application.backend.classes;
 
-
-
 import com.example.application.backend.enums.Category;
 
 import javax.persistence.*;
@@ -78,7 +76,6 @@ public class Book {
     public Author getAuthor() {
         return author;
     }
-
     public void setAuthor(Author author) {
         this.author = author;
     }
@@ -89,32 +86,6 @@ public class Book {
 
     public void setLoan(Loan loan) {
         this.loan = loan;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Book book = (Book) o;
-        return idBook == book.idBook && pages == book.pages && Objects.equals(title, book.title) && Objects.equals(isbn, book.isbn) && category == book.category && Objects.equals(author, book.author) && Objects.equals(loan, book.loan);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(idBook, title, isbn, pages, category, author, loan);
-    }
-
-    @Override
-    public String toString() {
-        return "Book{" +
-                "idBook=" + idBook +
-                ", title='" + title + '\'' +
-                ", isbn='" + isbn + '\'' +
-                ", pages=" + pages +
-                ", category=" + category +
-                ", author=" + author +
-                ", loan=" + loan +
-                '}';
     }
 
 }

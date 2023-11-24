@@ -78,22 +78,21 @@ public class Client {
 
     @Override
     public String toString() {
-        return "Cliente{" +
-                "idCliente=" + idClient +
+        return "Client{" +
+                "idClient=" + idClient +
                 ", dni='" + dni + '\'' +
-                ", nombre='" + name + '\'' +
-                ", direccion='" + address + '\'' +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
                 ", email='" + email + '\'' +
-                ", prestamos=" + loan +
+                ", loan=" + loan +
                 '}';
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Client cliente = (Client) o;
-        return idClient == cliente.idClient && Objects.equals(dni, cliente.dni) && Objects.equals(name, cliente.name) && Objects.equals(address, cliente.address) && Objects.equals(email, cliente.email) && Objects.equals(loan, cliente.loan);
+        if (!(o instanceof Client client)) return false;
+        return idClient == client.idClient && Objects.equals(dni, client.dni) && Objects.equals(name, client.name) && Objects.equals(address, client.address) && Objects.equals(email, client.email) && Objects.equals(loan, client.loan);
     }
 
     @Override

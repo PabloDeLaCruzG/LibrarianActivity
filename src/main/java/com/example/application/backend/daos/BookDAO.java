@@ -4,11 +4,7 @@ import com.example.application.backend.classes.Book;
 import org.jboss.logging.Logger;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-
-import static org.hibernate.bytecode.BytecodeLogging.LOGGER;
 
 public class BookDAO {
 
@@ -61,9 +57,10 @@ public class BookDAO {
 
     public static void updateBook(Book book) {
 
-            setUp();
-            em.merge(book);
-            close();
+        setUp();
+        book = em.merge(book);
+        em.persist(book);
+        close();
 
     }
 
@@ -81,21 +78,20 @@ public class BookDAO {
 
     public static List<Book> getBookList() {
 
-        List<Book> bookList = new ArrayList<>();
+        List<Book> bookList;
         setUp();
 
-        bookList = em.createQuery("SELECT b FROM Book b", Book.class).getResultList();
+            bookList = em.createQuery("SELECT b FROM Book b", Book.class).getResultList();
 
-        if (bookList.isEmpty()) {
-            LOG.info("No hay datos en la tabla equipo");
-        } else {
-            for (Book book : bookList) {
-                long idBook = book.getIdBook();
-                LOG.info(idBook + "--" + book.getTitle() + "--" + book.getIsbn() + "--" + book.getAuthor() + "--" + String.valueOf(book.getCategory()) + "--" + book.getPages());
+            if (bookList.isEmpty()) {
+                LOG.info("No hay datos en la tabla equipo");
+            } else {
+                for (Book book : bookList) {
+                    LOG.info(book.getIdBook() + "--" + book.getTitle() + "--" + book.getIsbn() + "--" + book.getAuthor() + "--" + String.valueOf(book.getCategory()) + "--" + book.getPages());
+                }
             }
-        }
 
-        close();
+            close();
 
         return bookList;
     }

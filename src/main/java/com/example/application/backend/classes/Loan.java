@@ -71,21 +71,20 @@ public class Loan {
 
     @Override
     public String toString() {
-        return "Prestamos{" +
-                "idPrestamo=" + idLoan +
-                ", libro=" + idBook +
-                ", cliente=" + idClient +
-                ", fechaPrestamo=" + loanDate +
-                ", fechaDevolucion=" + returnDate +
+        return "Loan{" +
+                "idLoan=" + idLoan +
+                ", idBook=" + idBook +
+                ", idClient=" + idClient +
+                ", loanDate=" + loanDate +
+                ", returnDate=" + returnDate +
                 '}';
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Loan prestamos = (Loan) o;
-        return idLoan == prestamos.idLoan && Objects.equals(idBook, prestamos.idBook) && Objects.equals(idClient, prestamos.idClient) && Objects.equals(loanDate, prestamos.loanDate) && Objects.equals(returnDate, prestamos.returnDate);
+        if (!(o instanceof Loan loan)) return false;
+        return idLoan == loan.idLoan && Objects.equals(idBook, loan.idBook) && Objects.equals(idClient, loan.idClient) && Objects.equals(loanDate, loan.loanDate) && Objects.equals(returnDate, loan.returnDate);
     }
 
     @Override
