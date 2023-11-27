@@ -1,16 +1,17 @@
 package com.example.application.backend.daos;
 
 
-
 import com.example.application.backend.classes.Author;
 import org.jboss.logging.Logger;
 
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.util.List;
 
 public class AuthorDAO {
 
-    private static final Logger LOG = Logger.getLogger(BookDAO.class);
+    private static final Logger LOG = Logger.getLogger(AuthorDAO.class);
     private static EntityManager em;
     private static EntityManagerFactory emf;
 
@@ -48,6 +49,16 @@ public class AuthorDAO {
 
     }
 
+    public static void removeAuthorFront(Author author) {
+
+        setUp();
+
+        em.remove(em.merge(author));
+
+        close();
+
+    }
+
     public static void updateAuthor(Author author) {
 
         setUp();
@@ -72,7 +83,7 @@ public class AuthorDAO {
         authorList = em.createQuery("SELECT a FROM Author a", Author.class).getResultList();
 
         if (authorList.isEmpty()) {
-            LOG.info("No hay datos en la tabla equipo");
+            LOG.info("No hay datos en la tabla autores");
         } else {
             for (Author author : authorList) {
                 LOG.info(author.getIdAuthor() + "--" + author.getName() + "--" + author.getSurnames() + "--" + author.getNationality());

@@ -6,8 +6,8 @@ import com.example.application.backend.daos.AuthorDAO;
 import com.example.application.backend.daos.BookDAO;
 import com.example.application.backend.enums.Category;
 import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.combobox.MultiSelectComboBox;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
@@ -18,25 +18,16 @@ import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.IntegerField;
-import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
-import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.component.button.Button;
 
-import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Collection;
-import java.util.Set;
-import java.util.stream.Collectors;
 
-@PageTitle("Admin Book")
-@Route(value = "")
+@Route(value = "admin-book", layout = AdminViewLayout.class)
 public class AdminBookView extends VerticalLayout {
 
-    List<Book> bookCollection = new ArrayList<>();
+    List<Book> bookCollection;
     Grid<Book> grid = new Grid<>(Book.class, false);
     FormLayout formLayout = new FormLayout();
     Book selectedBook;
@@ -87,8 +78,6 @@ public class AdminBookView extends VerticalLayout {
             authorSelect.clear();
 
             grid.getDataProvider().refreshAll();
-            grid.setItems(bookCollection);
-
             UI.getCurrent().getPage().reload();
         });
 
@@ -103,7 +92,7 @@ public class AdminBookView extends VerticalLayout {
         grid.addColumn(Book::getIdBook).setHeader("ID");
         grid.addColumn(Book::getTitle).setHeader("Título");
         grid.addColumn(Book::getIsbn).setHeader("ISBN");
-        grid.addColumn(Book::getAuthor).setHeader("Autor");
+        grid.addColumn(book -> book.getAuthor().getName()).setHeader("Autor");
         grid.addColumn(Book::getPages).setHeader("Páginas");
         grid.addColumn(Book::getCategory).setHeader("Valoración");
 
@@ -152,6 +141,7 @@ public class AdminBookView extends VerticalLayout {
             authorSelect.setLabel("Autores");
             authorSelect.setItems(authorList);
             authorSelect.setValue(book.getAuthor());
+            authorSelect.setItemLabelGenerator(Author::getName);
             form.add(authorSelect);
 
             Dialog dialog = new Dialog();
@@ -200,6 +190,7 @@ public class AdminBookView extends VerticalLayout {
             if (book != null) {
                 BookDAO.removeBookFront(book);
                 UI.getCurrent().getPage().reload();
+                grid.setItems(bookCollection);
 
                 Notification popup = Notification.show("Libro eliminado correctamente");
                 popup.addThemeVariants(NotificationVariant.LUMO_SUCCESS);

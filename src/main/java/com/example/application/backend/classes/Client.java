@@ -3,7 +3,6 @@ package com.example.application.backend.classes;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 public class Client {
@@ -15,7 +14,7 @@ public class Client {
     private String name;
     private String address;
     private String email;
-    @OneToMany(mappedBy = "idClient")
+    @OneToMany(mappedBy = "idClient", fetch = FetchType.LAZY)
     private List<Loan> loan = new ArrayList<>();
 
     public Client() {
@@ -76,27 +75,4 @@ public class Client {
         this.loan = loan;
     }
 
-    @Override
-    public String toString() {
-        return "Client{" +
-                "idClient=" + idClient +
-                ", dni='" + dni + '\'' +
-                ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                ", email='" + email + '\'' +
-                ", loan=" + loan +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Client client)) return false;
-        return idClient == client.idClient && Objects.equals(dni, client.dni) && Objects.equals(name, client.name) && Objects.equals(address, client.address) && Objects.equals(email, client.email) && Objects.equals(loan, client.loan);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(idClient, dni, name, address, email, loan);
-    }
 }

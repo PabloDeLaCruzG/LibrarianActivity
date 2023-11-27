@@ -1,8 +1,7 @@
 package com.example.application.backend.classes;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.Objects;
+import java.time.LocalDate;
 
 @Entity
 public class Loan {
@@ -13,16 +12,16 @@ public class Loan {
     @OneToOne
     @JoinColumn(name = "idBook")
     private Book idBook;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "idClient")
     private Client idClient;
-    private Date loanDate;
-    private Date returnDate;
+    private LocalDate loanDate;
+    private LocalDate returnDate;
 
     public Loan() {
     }
 
-    public Loan(Book idBook, Client idClient, Date loanDate, Date returnDate) {
+    public Loan(Book idBook, Client idClient, LocalDate loanDate, LocalDate returnDate) {
         this.idBook = idBook;
         this.idClient = idClient;
         this.loanDate = loanDate;
@@ -53,42 +52,20 @@ public class Loan {
         this.idClient = idClient;
     }
 
-    public Date getLoanDate() {
+    public LocalDate getLoanDate() {
         return loanDate;
     }
 
-    public void setLoanDate(Date loanDate) {
+    public void setLoanDate(LocalDate loanDate) {
         this.loanDate = loanDate;
     }
 
-    public Date getReturnDate() {
+    public LocalDate getReturnDate() {
         return returnDate;
     }
 
-    public void setReturnDate(Date returnDate) {
+    public void setReturnDate(LocalDate returnDate) {
         this.returnDate = returnDate;
     }
 
-    @Override
-    public String toString() {
-        return "Loan{" +
-                "idLoan=" + idLoan +
-                ", idBook=" + idBook +
-                ", idClient=" + idClient +
-                ", loanDate=" + loanDate +
-                ", returnDate=" + returnDate +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Loan loan)) return false;
-        return idLoan == loan.idLoan && Objects.equals(idBook, loan.idBook) && Objects.equals(idClient, loan.idClient) && Objects.equals(loanDate, loan.loanDate) && Objects.equals(returnDate, loan.returnDate);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(idLoan, idBook, idClient, loanDate, returnDate);
-    }
 }

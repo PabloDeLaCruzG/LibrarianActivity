@@ -3,7 +3,6 @@ package com.example.application.backend.classes;
 import com.example.application.backend.enums.Category;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 public class Book {
@@ -76,6 +75,7 @@ public class Book {
     public Author getAuthor() {
         return author;
     }
+
     public void setAuthor(Author author) {
         this.author = author;
     }

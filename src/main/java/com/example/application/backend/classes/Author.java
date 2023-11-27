@@ -3,7 +3,6 @@ package com.example.application.backend.classes;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 public class Author {
@@ -43,9 +42,13 @@ public class Author {
         this.name = name;
     }
 
-    public String getSurnames() { return surnames; }
+    public String getSurnames() {
+        return surnames;
+    }
 
-    public void setSurnames(String surnames) { this.surnames = surnames; }
+    public void setSurnames(String surnames) {
+        this.surnames = surnames;
+    }
 
     public String getNationality() {
         return nationality;

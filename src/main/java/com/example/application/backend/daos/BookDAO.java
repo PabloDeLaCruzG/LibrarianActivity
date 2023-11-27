@@ -3,7 +3,9 @@ package com.example.application.backend.daos;
 import com.example.application.backend.classes.Book;
 import org.jboss.logging.Logger;
 
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.util.List;
 
 public class BookDAO {
@@ -14,35 +16,35 @@ public class BookDAO {
 
     private static void setUp() {
 
-            emf = Persistence.createEntityManagerFactory("Librarian");
-            em = emf.createEntityManager();
-            em.getTransaction().begin();
+        emf = Persistence.createEntityManagerFactory("Librarian");
+        em = emf.createEntityManager();
+        em.getTransaction().begin();
 
     }
 
     private static void close() {
 
-            em.getTransaction().commit();
-            em.close();
+        em.getTransaction().commit();
+        em.close();
 
     }
 
     public static void addBook(Book book) {
 
-            setUp();
-            em.persist(book);
-            close();
+        setUp();
+        em.persist(book);
+        close();
 
     }
 
     public static void removeBook(int idBook) {
 
-            setUp();
-            Book book = em.find(Book.class, idBook);
-            if (book != null) {
-                em.remove(book);
-            }
-            close();
+        setUp();
+        Book book = em.find(Book.class, idBook);
+        if (book != null) {
+            em.remove(book);
+        }
+        close();
 
     }
 
@@ -66,13 +68,13 @@ public class BookDAO {
 
     public static Book getBook(int idBook) {
 
-            setUp();
-            Book book = em.find(Book.class, idBook);
-            if (book == null) {
-                return null;
-            }
-            close();
-            return book;
+        setUp();
+        Book book = em.find(Book.class, idBook);
+        if (book == null) {
+            return null;
+        }
+        close();
+        return book;
 
     }
 
@@ -81,17 +83,17 @@ public class BookDAO {
         List<Book> bookList;
         setUp();
 
-            bookList = em.createQuery("SELECT b FROM Book b", Book.class).getResultList();
+        bookList = em.createQuery("SELECT b FROM Book b", Book.class).getResultList();
 
-            if (bookList.isEmpty()) {
-                LOG.info("No hay datos en la tabla equipo");
-            } else {
-                for (Book book : bookList) {
-                    LOG.info(book.getIdBook() + "--" + book.getTitle() + "--" + book.getIsbn() + "--" + book.getAuthor() + "--" + String.valueOf(book.getCategory()) + "--" + book.getPages());
-                }
+        if (bookList.isEmpty()) {
+            LOG.info("No hay datos en la tabla libros");
+        } else {
+            for (Book book : bookList) {
+                LOG.info(book.getIdBook() + "--" + book.getTitle() + "--" + book.getIsbn() + "--" + book.getAuthor() + "--" + String.valueOf(book.getCategory()) + "--" + book.getPages());
             }
+        }
 
-            close();
+        close();
 
         return bookList;
     }

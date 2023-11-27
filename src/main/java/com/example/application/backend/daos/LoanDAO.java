@@ -1,11 +1,15 @@
 package com.example.application.backend.daos;
 
 import com.example.application.backend.classes.Loan;
+import org.jboss.logging.Logger;
 
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import java.util.List;
 
 public class LoanDAO {
-
+    private static final Logger LOG = Logger.getLogger(LoanDAO.class);
     private static EntityManager em;
     private static EntityManagerFactory emf;
 
@@ -43,6 +47,15 @@ public class LoanDAO {
 
     }
 
+    public static void removeLoanFront(Loan loan) {
+
+        setUp();
+
+        em.remove(em.merge(loan));
+
+        close();
+    }
+
     public static void updateLoan(Loan loan) {
 
         setUp();
@@ -57,6 +70,26 @@ public class LoanDAO {
         close();
         return em.find(Loan.class, idLoan);
 
+    }
+
+    public static List<Loan> getLoanList() {
+
+        List<Loan> loanList;
+        setUp();
+
+        loanList = em.createQuery("SELECT l FROM Loan l", Loan.class).getResultList();
+
+        if (loanList.isEmpty()) {
+            LOG.info("No hay datos en la tabla alquileres");
+        } else {
+            for (Loan loan : loanList) {
+                LOG.info(loan.getIdLoan() + "--" + loan.getIdClient().getIdClient() + "--" + loan.getBook().getIdBook() + "--" + loan.getLoanDate() + "--" + loan.getReturnDate());
+            }
+        }
+
+        close();
+
+        return loanList;
     }
 }
 
